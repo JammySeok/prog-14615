@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<head>
+    <meta charset="UTF-8">
+    <title>post</title>
+</head>
+<body>
+
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>title</td>
+        <td>content</td>
+    </tr>
+    <tr th:each="post : ${postList}">
+        <td th:text="${post.id}">id</td>
+        <td th:text="${post.title}">제목</td>
+        <td th:text="${post.content}">내용</td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
+<head>
+    <meta charset="UTF-8">
+    <title>wise</title>
+</head>
+<body>
+
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>author</td>
+        <td>saying</td>
+    </tr>
+        <tr th:each="wise : ${wiseList}">
+            <form method="post" th:action="@{/wise/delete/{id}(id=${wise.id})}">
+                <td th:text="${wise.id}">id</td>
+                <td th:text="${wise.author}">author</td>
+                <td th:text="${wise.saying}">saying</td>
+                <td><input type="submit" value="삭제"></td>
+            </form>
+        </tr>
+</table>
+
+<form method="post" th:action="@{wise/deleteOneTwoThree}">
+    <input type="submit" value="1,2,3 삭제">
+</form>
+</body>
+</html>
