@@ -1,10 +1,10 @@
 package com.example.prog_14615.domain.post.post;
 
+import com.example.prog_14615.global.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -39,12 +39,13 @@ public class PostService {
         return postRepository.findById(id).get();
     }
 
-    public void modify(Long id, String content) {
+    public void modify(Long id, String title, String content) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ServiceException("404", "게시물을 찾을 수 없음"));
 
-        Optional<Post> opPost = postRepository.findById(id);
-        Post post = opPost.get();
-
+        post.setTitle(title);
         post.setContent(content);
+
         postRepository.save(post);
     }
 }

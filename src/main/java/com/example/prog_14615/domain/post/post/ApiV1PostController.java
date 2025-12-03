@@ -1,5 +1,6 @@
 package com.example.prog_14615.domain.post.post;
 
+import com.example.prog_14615.domain.post.member.AuthTokenService;
 import com.example.prog_14615.domain.post.member.Member;
 import com.example.prog_14615.domain.post.member.MemberService;
 import com.example.prog_14615.global.exception.ServiceException;
@@ -19,6 +20,7 @@ public class ApiV1PostController {
 
     private final PostService postService;
     private final MemberService memberService;
+    private final AuthTokenService authTokenService;
     private final Rq rq;
 
     @Getter
@@ -57,14 +59,28 @@ public class ApiV1PostController {
     @ResponseBody
     @PostMapping("/api/v2/posts")
     public RsData writeV2(@RequestBody WriteReqBody writeReqBody) {
-            Member member = rq.getActor();
-            postService.write(writeReqBody.title, writeReqBody.content);
+        Member member = rq.getActor();
+        postService.write(writeReqBody.title, writeReqBody.content);
 
-            RsData rsData = new RsData();
-            rsData.setResultCode("200");
-            rsData.setMessage(member.getUsername() + "님의 글 작성이 완료되었습니다.");
+        RsData rsData = new RsData();
+        rsData.setResultCode("200");
+        rsData.setMessage(member.getUsername() + "님의 글 작성이 완료되었습니다.");
 
-            return rsData;
+        return rsData;
+    }
+
+    @ResponseBody
+    @PutMapping("/api/v1/posts/{id}")
+    public RsData modify(@PathVariable("id") Long id, @RequestBody WriteReqBody writeReqBody) {
+
+        Member member = rq.getActor();
+        postService.modify(id, writeReqBody.title, writeReqBody.content);
+
+        RsData rsData = new RsData();
+        rsData.setResultCode("200");
+        rsData.setMessage(member.getUsername() + "님이 게시글을 수정함");
+
+        return rsData;
     }
 
     @ResponseBody
